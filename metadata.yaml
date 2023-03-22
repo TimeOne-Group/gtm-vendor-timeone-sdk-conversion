@@ -1,5 +1,7 @@
 homepage: ​"www.timeonegroup.com"​,
 documentation: ​"https://github.com/TimeOne-Group/gtm-vendor-timeone-sdk-conversion/blob/main/docs/install.md"​,
 versions:
+  - sha: be72cc101c875fe0f79f48ae4afbf86908b3c381
+    changeNotes: Permet d'ajouter le comid (optionnel).
   - sha: 66f57c81454f72d5c58816655bb4928cf67324a8
     changeNotes: ​Initial release.
