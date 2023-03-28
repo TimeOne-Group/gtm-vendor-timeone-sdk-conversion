@@ -43,6 +43,16 @@ ___TEMPLATE_PARAMETERS___
         "type": "POSITIVE_NUMBER"
       }
     ]
+  },{
+    "type": "TEXT",
+    "name": "comid",
+    "displayName": "identifiant de la commission à appliquer",
+    "simpleValueType": true,
+    "valueValidators": [
+      {
+        "type": "POSITIVE_NUMBER"
+      }
+    ]
   }
 ]
 
@@ -52,12 +62,18 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 const createQueue = require('createQueue');
 const isdkPush = createQueue('__ISDK');
 
-isdkPush(["addConversion", data.progid]);
+const options = {};
+
+if(data.comid) {
+  options.comid = data.comid;
+}
+
+isdkPush(["addConversion", data.progid, options]);
 
 // Appelez data.gtmOnSuccess une fois la balise terminée.
 data.gtmOnSuccess();
 
-return ["addConversion", data.progid];
+return ["addConversion", data.progid, options];
 
 
 ___WEB_PERMISSIONS___
@@ -140,7 +156,20 @@ scenarios:
     const isdk = runCode(mockData);
 
     // Verify that the tag finished successfully.
-    assertThat(isdk).isEqualTo(["addConversion", "10"]);
+    assertThat(isdk).isEqualTo(["addConversion", "10", {}]);
+
+- name: comid
+  code: |-
+    const mockData = {
+        progid: "10",
+        comid: "123"
+    };
+
+    // Call runCode to run the template's code.
+    const isdk = runCode(mockData);
+
+    // Verify that the tag finished successfully.
+    assertThat(isdk).isEqualTo(["addConversion", "10", { comid: "123" }]);
 
 
 ___NOTES___
